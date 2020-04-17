@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "233368374877",
+    "firebase_url": "https://stopwatch-d6490.firebaseio.com",
+    "project_id": "stopwatch-d6490",
+    "storage_bucket": "stopwatch-d6490.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:233368374877:android:5338eee39722f238d5c7b4",
+        "android_client_info": {
+          "package_name": "com.tyeecehensley.stopwatch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "233368374877-v27dgo1s1nj3ajmmokt1h0t0g34cjtma.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfOGW1KHFKo946xpGo43jhc6JQ3IRI6Ho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "233368374877-v27dgo1s1nj3ajmmokt1h0t0g34cjtma.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

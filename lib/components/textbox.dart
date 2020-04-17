@@ -11,7 +11,7 @@ class EventTextBox extends StatefulWidget {
       {@required this.hint,
       @required this.keybrd,
       @required this.lines,
-      @required this.myController});
+      this.myController});
   @override
   _EventTextBoxState createState() => _EventTextBoxState();
 }

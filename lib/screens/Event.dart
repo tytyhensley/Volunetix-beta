@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stopwatch/screens/InputPage.dart';
 import 'package:stopwatch/components/constants.dart';
 import 'package:stopwatch/components/watchbuttons.dart';
 
@@ -25,12 +24,7 @@ class _EventPageState extends State<EventPage> {
           WatchButton(
             buttontitle: 'CREATE EVENT',
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => InputPage(),
-                ),
-              );
+              Navigator.pushNamed(context, 'input_screen');
             },
             textcolor: ktextColorA,
           ),

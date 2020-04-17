@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:stopwatch/screens/WelcomePage.dart';
+import 'package:stopwatch/screens/InputPage.dart';
+import 'package:stopwatch/screens/LoginPage.dart';
 import 'package:stopwatch/screens/Event.dart';
+import 'package:stopwatch/screens/RegisterPage.dart';
+import 'package:stopwatch/screens/StopWatch.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,7 +17,15 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.black,
         scaffoldBackgroundColor: Color(0xFF050505),
       ),
-      home: EventPage(),
+      initialRoute: 'welcome_screen',
+      routes: {
+        'welcome_screen': (context) => WelcomeScreen(),
+        'login_screen': (context) => LoginPage(),
+        'registration_screen': (context) => RegistrationScreen(),
+        'input_screen': (context) => InputPage(),
+        'event_screen': (context) => EventPage(),
+        'stopwatch_screen': (context) => StopWatch(),
+      },
     );
   }
 }

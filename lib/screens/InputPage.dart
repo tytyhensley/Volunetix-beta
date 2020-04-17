@@ -103,12 +103,7 @@ class _InputPageState extends State<InputPage> {
                 buttontitle: 'START EVENT',
                 onTap: () {
                   if (checkTextFieldEmptyOrNot() == true) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => StopWatch(),
-                      ),
-                    );
+                    Navigator.pushNamed(context, 'stopwatch_screen');
                   } else {
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
