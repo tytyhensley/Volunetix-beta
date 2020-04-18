@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stopwatch/screens/WelcomePage.dart';
+import 'package:stopwatch/screens/WelcomeScreen.dart';
 import 'package:stopwatch/screens/InputPage.dart';
 import 'package:stopwatch/screens/LoginPage.dart';
 import 'package:stopwatch/screens/Event.dart';
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: 'welcome_screen',
       routes: {
-        'welcome_screen': (context) => WelcomeScreen(),
+        'welcome_screen': (context) => WelcomePage(),
         'login_screen': (context) => LoginPage(),
         'registration_screen': (context) => RegistrationScreen(),
         'input_screen': (context) => InputPage(),

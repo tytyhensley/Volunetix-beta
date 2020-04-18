@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stopwatch/components/textbox.dart';
 import 'package:stopwatch/components/constants.dart';
-import 'package:stopwatch/screens/StopWatch.dart';
 import 'package:stopwatch/components/watchbuttons.dart';
 import 'dart:async';
 
@@ -62,7 +61,6 @@ class _InputPageState extends State<InputPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           'New Event',

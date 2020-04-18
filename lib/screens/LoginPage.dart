@@ -27,49 +27,56 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            EventTextBox(
-              hint: 'Enter your email',
-              keybrd: TextInputType.text,
-              lines: 1,
-              myController: email,
-            ),
-            EventTextBox(
-              hint: 'Enter your password',
-              keybrd: TextInputType.text,
-              lines: 1,
-              myController: password,
-            ),
-            Builder(
-              builder: (context) => WatchButton(
-                buttontitle: 'Login User',
-                onTap: () {
-                  if (checkTextFieldEmptyOrNot() == true) {
-                    Navigator.pushNamed(context, 'event_screen');
-                  } else {
-                    Scaffold.of(context).showSnackBar(
-                      SnackBar(
-                        duration: Duration(seconds: 1),
-                        backgroundColor: kbuttonColor,
-                        content: Text(
-                          'Please fill in all the text fields',
-                          style: TextStyle(
-                            color: ktextColorA,
-                            fontSize: 20,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    );
-                  }
-                },
-                textcolor: ktextColorA,
+      appBar: AppBar(
+        title: Text(
+          'Stopwatch',
+          style: kAppTextStyle,
+        ),
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              EventTextBox(
+                hint: 'Enter your email',
+                keybrd: TextInputType.emailAddress,
+                lines: 1,
+                myController: email,
               ),
-            )
-          ],
+              EventTextBox(
+                hint: 'Enter your password',
+                keybrd: TextInputType.visiblePassword,
+                lines: 1,
+                myController: password,
+              ),
+              Builder(
+                builder: (context) => WatchButton(
+                  buttontitle: 'Login User',
+                  onTap: () {
+                    if (checkTextFieldEmptyOrNot() == true) {
+                      Navigator.pushNamed(context, 'event_screen');
+                    } else {
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          duration: Duration(seconds: 1),
+                          backgroundColor: kbuttonColor,
+                          content: Text(
+                            'Please fill in all the text fields',
+                            style: TextStyle(
+                              color: ktextColorA,
+                              fontSize: 20,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  textcolor: ktextColorA,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
