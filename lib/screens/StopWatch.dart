@@ -3,13 +3,19 @@ import 'package:flutter/material.dart';
 import '../components/constants.dart';
 import '../components/watchbuttons.dart';
 import '../components/circletime.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class StopWatch extends StatefulWidget {
+  final String docid;
+  StopWatch({this.docid});
+
   @override
   _StopWatchState createState() => _StopWatchState();
 }
 
 class _StopWatchState extends State<StopWatch> {
+  final _firestore = Firestore.instance;
+
   var startcolor = ktextColorD;
   var stopcolor = ktextColorD;
   var resetcolor = ktextColorD;
@@ -60,6 +66,9 @@ class _StopWatchState extends State<StopWatch> {
       resetcolor = ktextColorD;
     });
     swatch.stop();
+    _firestore.collection('events').document(widget.docid).updateData({
+      'event_timetaken': timedisplay,
+    });
   }
 
   void resetwatch() {

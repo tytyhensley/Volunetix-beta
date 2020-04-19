@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:stopwatch/components/textbox.dart';
 import 'package:stopwatch/components/constants.dart';
 import 'package:stopwatch/components/watchbuttons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:stopwatch/screens/StopWatch.dart';
 import 'dart:async';
 
 class InputPage extends StatefulWidget {
@@ -10,6 +13,10 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  final _firestore = Firestore.instance;
+  final _auth = FirebaseAuth.instance;
+  FirebaseUser loggedInUser;
+
   final textController_1 = TextEditingController();
   final textController_2 = TextEditingController();
   final textController_3 = TextEditingController();
@@ -59,6 +66,23 @@ class _InputPageState extends State<InputPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser();
+      if (user != null) {
+        loggedInUser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -101,7 +125,30 @@ class _InputPageState extends State<InputPage> {
                 buttontitle: 'START EVENT',
                 onTap: () {
                   if (checkTextFieldEmptyOrNot() == true) {
-                    Navigator.pushNamed(context, 'stopwatch_screen');
+                    _firestore
+                        .collection('events')
+                        .document(textController_1.text)
+                        .setData({
+                      'event_host': loggedInUser.email,
+                      'event_name': textController_1.text,
+                      'event_des': textController_3.text,
+                      'event_date': _date.year.toString() +
+                          '-' +
+                          _date.month.toString() +
+                          '-' +
+                          _date.day.toString(),
+                      'event_time':
+                          _time.hour.toString() + ':' + _time.minute.toString(),
+                      'event_timetaken': '00:00:00',
+                    });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => StopWatch(
+                          docid: textController_1.text,
+                        ),
+                      ),
+                    );
                   } else {
                     Scaffold.of(context).showSnackBar(
                       SnackBar(

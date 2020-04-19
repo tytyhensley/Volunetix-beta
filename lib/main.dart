@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
         'registration_screen': (context) => RegistrationScreen(),
         'input_screen': (context) => InputPage(),
         'event_screen': (context) => EventPage(),
-        'stopwatch_screen': (context) => StopWatch(),
       },
     );
   }
