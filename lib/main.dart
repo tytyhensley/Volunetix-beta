@@ -4,7 +4,6 @@ import 'package:stopwatch/screens/InputPage.dart';
 import 'package:stopwatch/screens/LoginPage.dart';
 import 'package:stopwatch/screens/Event.dart';
 import 'package:stopwatch/screens/RegisterPage.dart';
-import 'package:stopwatch/screens/StopWatch.dart';
 
 void main() => runApp(MyApp());
 
