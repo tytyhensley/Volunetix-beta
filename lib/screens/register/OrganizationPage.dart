@@ -19,7 +19,6 @@ class OrganizationPage extends StatefulWidget {
 class _OrganizationPageState extends State<OrganizationPage> {
   final oname = TextEditingController();
   final _firestore = Firestore.instance;
-  final _firestore1 = Firestore.instance;
 
   checkTextFieldEmptyOrNot() {
     String text1;
@@ -59,7 +58,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
                 height: 40.0,
               ),
               Text(
-                'Wonderful, $widget.fname',
+                'Wonderful, ',
                 style: kAppTextStyle,
               ),
               SizedBox(
@@ -119,7 +118,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
                         'profession': widget.prof,
                         'vol/org': 'org',
                       });
-                      _firestore1
+                      _firestore
                           .collection('Volunetix')
                           .document(widget.email)
                           .collection(oname.text);
