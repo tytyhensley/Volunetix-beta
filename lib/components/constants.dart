@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
-const kbuttonColor = Color(0xFF050505);
-const ktextColorD = Colors.white;
-const ktextColorA = Colors.deepOrangeAccent;
+const kbuttonColor = Colors.white;
+const ktextColorD = Color(0xFF7153a0);
+const ktextColorA = Color(0xFFFF9D00);
 
+const kTitleTextStyle = TextStyle(
+  color: Colors.white,
+  fontSize: 30.0,
+  fontWeight: FontWeight.w700,
+);
 const kAppTextStyle = TextStyle(
   color: Colors.white,
-  fontSize: 25.0,
-  fontWeight: FontWeight.w500,
+  fontSize: 14.0,
+  fontWeight: FontWeight.w300,
 );

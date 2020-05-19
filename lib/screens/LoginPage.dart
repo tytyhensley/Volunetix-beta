@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:stopwatch/components/gradientBackground.dart';
+import 'package:stopwatch/components/passwordbox.dart';
 import 'package:stopwatch/components/textbox.dart';
 import 'package:stopwatch/components/constants.dart';
-import 'package:stopwatch/components/watchbuttons.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -13,7 +13,6 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _auth = FirebaseAuth.instance;
-  bool showSpinner = false;
   final email = TextEditingController();
   final password = TextEditingController();
 
@@ -41,70 +40,113 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Stopwatch',
-          style: kAppTextStyle,
-        ),
-      ),
-      body: ModalProgressHUD(
-        inAsyncCall: showSpinner,
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                EventTextBox(
-                  hint: 'Enter your email',
-                  keybrd: TextInputType.emailAddress,
-                  lines: 1,
-                  myController: email,
-                ),
-                EventTextBox(
-                  hint: 'Enter your password',
-                  keybrd: TextInputType.visiblePassword,
-                  lines: 1,
-                  myController: password,
-                ),
-                Builder(
-                  builder: (context) => WatchButton(
-                    buttontitle: 'Login User',
-                    onTap: () async {
-                      if (checkTextFieldEmptyOrNot() == true) {
-                        setState(() {
-                          showSpinner = true;
-                        });
-                        try {
-                          final user = await loginUser();
-                        } catch (e) {
-                          print(e);
-                        }
-                        Navigator.pushNamed(context, 'event_screen');
-                        setState(() {
-                          showSpinner = false;
-                        });
-                      } else {
-                        Scaffold.of(context).showSnackBar(
-                          SnackBar(
-                            duration: Duration(seconds: 1),
-                            backgroundColor: kbuttonColor,
-                            content: Text(
-                              'Please fill in all the text fields',
-                              style: TextStyle(
-                                color: ktextColorA,
-                                fontSize: 20,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                    textcolor: ktextColorA,
-                  ),
-                )
-              ],
+      body: GradientBackground(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              height: 30.0,
             ),
-          ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              height: 30.0,
+            ),
+            Text(
+              'Welcome back,',
+              style: kAppTextStyle.copyWith(
+                fontSize: 20.0,
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Text(
+              'Sign in',
+              style: kTitleTextStyle,
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            TextBox(
+              label: 'EMAIL ADDRESS',
+              keybrd: TextInputType.emailAddress,
+              lines: 1,
+              myController: email,
+            ),
+            PasswordTextBox(
+              label: 'PASSWORD',
+              keybrd: TextInputType.visiblePassword,
+              lines: 1,
+              myController: password,
+            ),
+            SizedBox(
+              height: 40.0,
+            ),
+            Center(
+              child: GestureDetector(
+                child: Text(
+                  'Next',
+                  style: kAppTextStyle.copyWith(
+                    fontSize: 20.0,
+                  ),
+                ),
+                onTap: () async {
+                  if (checkTextFieldEmptyOrNot() == true) {
+                    try {
+                      await loginUser();
+                    } catch (e) {
+                      print(e);
+                    }
+                    Navigator.pushNamed(context, 'event_screen');
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        // return object of type Dialog
+                        return AlertDialog(
+                          title: Text(
+                            "Uh-Oh",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          content: Text(
+                            "Please fill in all text fields",
+                            textAlign: TextAlign.center,
+                          ),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text(
+                                "OK",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
+            )
+          ],
         ),
       ),
     );

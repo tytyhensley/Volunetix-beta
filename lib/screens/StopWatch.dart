@@ -88,9 +88,16 @@ class _StopWatchState extends State<StopWatch> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'New Event',
-          style: kAppTextStyle,
+        backgroundColor: Colors.deepPurple[700],
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/Volunetic-horizontal-white.png',
+              fit: BoxFit.contain,
+              height: 32,
+            ),
+          ],
         ),
       ),
       body: Column(

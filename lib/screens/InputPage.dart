@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:stopwatch/components/gradientBackground.dart';
 import 'package:stopwatch/components/textbox.dart';
 import 'package:stopwatch/components/constants.dart';
-import 'package:stopwatch/components/watchbuttons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:stopwatch/screens/StopWatch.dart';
@@ -86,43 +86,60 @@ class _InputPageState extends State<InputPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'New Event',
-          style: kAppTextStyle,
+        backgroundColor: Colors.deepPurple[700],
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/Volunetic-horizontal-white.png',
+              fit: BoxFit.contain,
+              height: 32,
+            ),
+          ],
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            EventTextBox(
-              hint: 'Event Name',
-              keybrd: TextInputType.text,
-              lines: 1,
-              myController: textController_1,
-            ),
-            InkWell(
-              onTap: () {
-                _selectDate(context);
-              },
-              child: IgnorePointer(
-                child: EventTextBox(
-                  hint: 'Event Date',
-                  keybrd: TextInputType.datetime,
-                  lines: 1,
-                  myController: textController_2,
+      body: GradientBackground(
+        begin: Alignment.center,
+        end: Alignment.bottomCenter,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              TextBox(
+                label: 'Event Name',
+                keybrd: TextInputType.text,
+                lines: 1,
+                myController: textController_1,
+              ),
+              InkWell(
+                onTap: () {
+                  _selectDate(context);
+                },
+                child: IgnorePointer(
+                  child: TextBox(
+                    label: 'Event Date',
+                    keybrd: TextInputType.datetime,
+                    lines: 1,
+                    myController: textController_2,
+                  ),
                 ),
               ),
-            ),
-            EventTextBox(
-              hint: 'Event Description',
-              keybrd: TextInputType.text,
-              lines: 6,
-              myController: textController_3,
-            ),
-            Builder(
-              builder: (context) => WatchButton(
-                buttontitle: 'START EVENT',
+              TextBox(
+                label: 'Event Description',
+                keybrd: TextInputType.text,
+                lines: 6,
+                myController: textController_3,
+              ),
+              SizedBox(
+                height: 60.0,
+              ),
+              GestureDetector(
+                child: Text(
+                  'START EVENT',
+                  style: kAppTextStyle.copyWith(
+                    fontSize: 24.0,
+                  ),
+                ),
                 onTap: () {
                   if (checkTextFieldEmptyOrNot() == true) {
                     _firestore
@@ -150,26 +167,44 @@ class _InputPageState extends State<InputPage> {
                       ),
                     );
                   } else {
-                    Scaffold.of(context).showSnackBar(
-                      SnackBar(
-                        duration: Duration(seconds: 1),
-                        backgroundColor: kbuttonColor,
-                        content: Text(
-                          'Please fill in all the text fields',
-                          style: TextStyle(
-                            color: ktextColorA,
-                            fontSize: 20,
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        // return object of type Dialog
+                        return AlertDialog(
+                          title: Text(
+                            "Uh-Oh",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
+                          content: Text(
+                            "Please fill in all text fields",
+                            textAlign: TextAlign.center,
+                          ),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text(
+                                "OK",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
                     );
                   }
                 },
-                textcolor: ktextColorA,
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

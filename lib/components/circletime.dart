@@ -14,7 +14,7 @@ class CircleTime extends StatelessWidget {
       height: 300.0,
       margin: EdgeInsets.all(20.0),
       decoration: BoxDecoration(
-        color: Colors.deepOrangeAccent,
+        color: Colors.deepPurple[700],
         shape: BoxShape.circle,
       ),
       alignment: Alignment.center,

@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 
-class TextBox extends StatefulWidget {
+class PasswordTextBox extends StatefulWidget {
   final String label;
   final TextInputType keybrd;
   final int lines;
   final TextEditingController myController;
 
-  TextBox({
+  PasswordTextBox({
     @required this.label,
     @required this.keybrd,
     @required this.lines,
     this.myController,
   });
   @override
-  _TextBoxState createState() => _TextBoxState();
+  _PasswordTextBoxState createState() => _PasswordTextBoxState();
 }
 
-class _TextBoxState extends State<TextBox> {
+class _PasswordTextBoxState extends State<PasswordTextBox> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      obscureText: true,
       controller: widget.myController,
       maxLines: widget.lines,
       style: TextStyle(
