@@ -4,6 +4,8 @@ import 'package:stopwatch/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:stopwatch/components/welcomebutton.dart';
 import 'package:stopwatch/components/gradientBackground.dart';
+import 'dart:math';
+import 'package:animator/animator.dart';
 
 class WelcomePage extends StatefulWidget {
   @override
@@ -22,57 +24,89 @@ class _WelcomePageState extends State<WelcomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             SizedBox(
-              height: 70.0,
+              height: 50.0,
             ),
-            Image.asset(
-              'assets/images/Volunetix-vertical-white.png',
-              height: 100,
-              width: 100,
-              color: ktextColorA,
+            Animator(
+              tween: Tween<double>(begin: 0, end: 2 * pi),
+              duration: Duration(seconds: 6),
+              repeats: 0,
+              builder: (_, anim, __) => Transform(
+                transform: Matrix4.rotationY(anim.value),
+                alignment: Alignment.center,
+                child: Image.asset(
+                  'assets/images/volunetixLogoSmall.png',
+                  height: 100,
+                  width: 100,
+                ),
+              ),
             ),
             SizedBox(
-              height: 60.0,
+              height: 30.0,
             ),
-            Center(
-              child: AutoSizeText(
-                'Welcome to Volunetix',
-                style: kTitleTextStyle,
+            Animator(
+              duration: Duration(seconds: 1),
+              builder: (_, anim, __) => Opacity(
+                opacity: anim.value,
+                child: Center(
+                  child: AutoSizeText(
+                    'Welcome to Volunetix',
+                    style: kTitleTextStyle,
+                  ),
+                ),
               ),
             ),
             SizedBox(
               height: 10.0,
             ),
-            Center(
-              child: AutoSizeText(
-                'Join our community of volunteers and charites. Lets change the world together',
-                style: kAppTextStyle,
-                textAlign: TextAlign.center,
+            Animator(
+              duration: Duration(seconds: 2),
+              builder: (_, anim, __) => Opacity(
+                opacity: anim.value,
+                child: Center(
+                  child: AutoSizeText(
+                    'Join our community of volunteers and charites. Lets change the world together',
+                    style: kAppTextStyle,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ),
             ),
-            WelcomeButton(
-              buttontitle: 'Sign Up with Email',
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  'registration_screen',
-                );
-              },
-              textcolor: Colors.deepPurple[700],
+            Animator(
+              duration: Duration(seconds: 3),
+              builder: (_, anim, __) => Opacity(
+                opacity: anim.value,
+                child: WelcomeButton(
+                  buttontitle: 'Sign Up with Email',
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      'registration_screen',
+                    );
+                  },
+                  textcolor: Colors.deepPurple[700],
+                ),
+              ),
             ),
             SizedBox(
               height: 40.0,
             ),
-            Center(
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    'login_screen',
-                  );
-                },
-                child: Text(
-                  'Already have an account? Sign In',
-                  style: kAppTextStyle,
+            Animator(
+              duration: Duration(seconds: 3),
+              builder: (_, anim, __) => Opacity(
+                opacity: anim.value,
+                child: Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        'login_screen',
+                      );
+                    },
+                    child: Text(
+                      'Already have an account? Sign In',
+                      style: kAppTextStyle,
+                    ),
+                  ),
                 ),
               ),
             ),

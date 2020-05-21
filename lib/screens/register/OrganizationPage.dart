@@ -117,11 +117,8 @@ class _OrganizationPageState extends State<OrganizationPage> {
                         'last name': widget.lname,
                         'profession': widget.prof,
                         'vol/org': 'org',
+                        'oname': oname.text,
                       });
-                      _firestore
-                          .collection('Volunetix')
-                          .document(widget.email)
-                          .collection(oname.text);
                       Navigator.pushNamed(context, 'event_screen');
                     } else {
                       showDialog(

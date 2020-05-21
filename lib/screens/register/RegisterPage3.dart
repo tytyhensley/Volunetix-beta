@@ -78,6 +78,7 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                       vcolor = ktextColorA;
                       ocolor = Color(0x20FFFFFF);
                       vol = true;
+                      org = false;
                     });
                   },
                 ),
@@ -96,6 +97,7 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                       ocolor = ktextColorA;
                       vcolor = Color(0x20FFFFFF);
                       org = true;
+                      vol = false;
                     });
                   },
                 ),

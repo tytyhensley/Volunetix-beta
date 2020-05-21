@@ -28,6 +28,7 @@ dependencies:
   firebase_auth: ^0.16.0
   cloud_firestore: ^0.13.5
   modal_progress_hud: ^0.1.3
+  animator: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +52,7 @@ flutter:
     - assets/images/Volunetix-vertical-white.png
     - assets/images/soloIcon.png
     - assets/images/charityIcon.png
+    - assets/images/volunetixLogoSmall.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg
