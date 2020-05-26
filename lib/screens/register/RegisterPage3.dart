@@ -10,8 +10,10 @@ class RegistrationScreen3 extends StatefulWidget {
   final String lname;
   final String prof;
   final String email;
+  final String pnum;
 
-  RegistrationScreen3({this.fname, this.lname, this.prof, this.email});
+  RegistrationScreen3(
+      {this.fname, this.lname, this.prof, this.email, this.pnum});
 
   @override
   _RegistrationScreen3State createState() => _RegistrationScreen3State();
@@ -123,6 +125,7 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                           'first name': widget.fname,
                           'last name': widget.lname,
                           'profession': widget.prof,
+                          'phone number': widget.pnum,
                           'vol/org': 'vol',
                         });
                         Navigator.pushNamed(context, 'event_screen');
@@ -135,6 +138,7 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                               lname: widget.lname,
                               prof: widget.prof,
                               email: widget.email,
+                              pnum: widget.pnum,
                             ),
                           ),
                         );

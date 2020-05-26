@@ -15,6 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   final _auth = FirebaseAuth.instance;
   final email = TextEditingController();
   final password = TextEditingController();
+  List<String> errors;
 
   checkTextFieldEmptyOrNot() {
     String text1, text2;
@@ -26,15 +27,6 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       return true;
     }
-  }
-
-  loginUser() {
-    String usere, userp;
-
-    usere = email.text;
-    userp = password.text;
-
-    return _auth.signInWithEmailAndPassword(email: usere, password: userp);
   }
 
   @override
@@ -103,11 +95,48 @@ class _LoginPageState extends State<LoginPage> {
                 onTap: () async {
                   if (checkTextFieldEmptyOrNot() == true) {
                     try {
-                      await loginUser();
-                    } catch (e) {
-                      print(e);
+                      await _auth
+                          .signInWithEmailAndPassword(
+                              email: email.text, password: password.text)
+                          .then((value) {
+                        Navigator.pushNamed(context, 'event_screen');
+                      });
+                    } catch (error) {
+                      errors = error.toString().split(',');
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          // return object of type Dialog
+                          return AlertDialog(
+                            title: Text(
+                              "Uh-Oh",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w800,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            content: Text(
+                              errors[1],
+                              textAlign: TextAlign.center,
+                            ),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text(
+                                  "OK",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     }
-                    Navigator.pushNamed(context, 'event_screen');
                   } else {
                     showDialog(
                       context: context,

@@ -20,10 +20,13 @@ class RegistrationScreen2 extends StatefulWidget {
 
 class _RegistrationScreen2State extends State<RegistrationScreen2> {
   final _auth = FirebaseAuth.instance;
+  FirebaseUser authUser;
 
   final email = TextEditingController();
   final password = TextEditingController();
   final cpassword = TextEditingController();
+  final pnum = TextEditingController();
+  List<String> errors;
 
   checkTextFieldEmptyOrNot() {
     String text1, text2, text3;
@@ -50,15 +53,6 @@ class _RegistrationScreen2State extends State<RegistrationScreen2> {
     } else {
       return false;
     }
-  }
-
-  createUser() {
-    String usere, userp;
-
-    usere = email.text;
-    userp = password.text;
-
-    return _auth.createUserWithEmailAndPassword(email: usere, password: userp);
   }
 
   @override
@@ -137,6 +131,12 @@ class _RegistrationScreen2State extends State<RegistrationScreen2> {
                 lines: 1,
                 myController: cpassword,
               ),
+              TextBox(
+                label: 'PHONE NUMBER',
+                keybrd: TextInputType.phone,
+                lines: 1,
+                myController: pnum,
+              ),
               SizedBox(
                 height: 40.0,
               ),
@@ -152,21 +152,59 @@ class _RegistrationScreen2State extends State<RegistrationScreen2> {
                     if (checkPasswordSame() == true) {
                       if (checkTextFieldEmptyOrNot() == true) {
                         try {
-                          await createUser();
-                        } catch (e) {
-                          print(e);
+                          await _auth
+                              .createUserWithEmailAndPassword(
+                                  email: email.text, password: password.text)
+                              .then((value) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RegistrationScreen3(
+                                  fname: widget.fname,
+                                  lname: widget.lname,
+                                  prof: widget.prof,
+                                  email: email.text,
+                                  pnum: pnum.text,
+                                ),
+                              ),
+                            );
+                          });
+                        } catch (error) {
+                          errors = error.toString().split(',');
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              // return object of type Dialog
+                              return AlertDialog(
+                                title: Text(
+                                  "Uh-Oh",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                content: Text(
+                                  errors[1],
+                                  textAlign: TextAlign.center,
+                                ),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    child: Text(
+                                      "OK",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         }
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RegistrationScreen3(
-                              fname: widget.fname,
-                              lname: widget.lname,
-                              prof: widget.prof,
-                              email: email.text,
-                            ),
-                          ),
-                        );
                       } else {
                         showDialog(
                           context: context,

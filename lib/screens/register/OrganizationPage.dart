@@ -10,8 +10,9 @@ class OrganizationPage extends StatefulWidget {
   final String lname;
   final String prof;
   final String email;
+  final String pnum;
 
-  OrganizationPage({this.fname, this.lname, this.prof, this.email});
+  OrganizationPage({this.fname, this.lname, this.prof, this.email, this.pnum});
   @override
   _OrganizationPageState createState() => _OrganizationPageState();
 }
@@ -116,6 +117,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
                         'first name': widget.fname,
                         'last name': widget.lname,
                         'profession': widget.prof,
+                        'phone number': widget.pnum,
                         'vol/org': 'org',
                         'oname': oname.text,
                       });
