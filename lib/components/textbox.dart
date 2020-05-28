@@ -7,7 +7,7 @@ class TextBox extends StatefulWidget {
   final TextEditingController myController;
 
   TextBox({
-    @required this.label,
+    this.label,
     @required this.keybrd,
     @required this.lines,
     this.myController,

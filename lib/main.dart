@@ -6,6 +6,7 @@ import 'package:stopwatch/screens/Event.dart';
 import 'package:stopwatch/screens/register/RegisterPage1.dart';
 import 'package:stopwatch/screens/register/RegisterPage2.dart';
 import 'package:stopwatch/screens/register/RegisterPage3.dart';
+import 'package:stopwatch/screens/ForgotPassword.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         'registration_screen3': (context) => RegistrationScreen3(),
         'input_screen': (context) => InputPage(),
         'event_screen': (context) => EventPage(),
+        'forgotpass_screen': (context) => ForgotPassword(),
       },
     );
   }
