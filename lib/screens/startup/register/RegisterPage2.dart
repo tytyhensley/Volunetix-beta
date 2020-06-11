@@ -5,7 +5,7 @@ import 'package:stopwatch/components/gradientBackground.dart';
 import 'package:stopwatch/components/passwordbox.dart';
 import 'package:stopwatch/components/textbox.dart';
 import 'package:stopwatch/components/constants.dart';
-import 'package:stopwatch/screens/register/RegisterPage3.dart';
+import 'package:stopwatch/screens/startup/register/RegisterPage3.dart';
 
 class RegistrationScreen2 extends StatefulWidget {
   final String fname;
@@ -20,7 +20,6 @@ class RegistrationScreen2 extends StatefulWidget {
 
 class _RegistrationScreen2State extends State<RegistrationScreen2> {
   final _auth = FirebaseAuth.instance;
-  FirebaseUser authUser;
 
   final email = TextEditingController();
   final password = TextEditingController();

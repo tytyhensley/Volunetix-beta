@@ -1,32 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:stopwatch/components/gradientBackground.dart';
-import 'package:stopwatch/components/constants.dart';
 import 'package:stopwatch/components/textbox.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:stopwatch/components/constants.dart';
+import 'package:stopwatch/screens/startup/register/RegisterPage2.dart';
 
-class OrganizationPage extends StatefulWidget {
-  final String fname;
-  final String lname;
-  final String prof;
-  final String email;
-  final String pnum;
-
-  OrganizationPage({this.fname, this.lname, this.prof, this.email, this.pnum});
+class RegistrationScreen extends StatefulWidget {
   @override
-  _OrganizationPageState createState() => _OrganizationPageState();
+  _RegistrationScreenState createState() => _RegistrationScreenState();
 }
 
-class _OrganizationPageState extends State<OrganizationPage> {
-  final oname = TextEditingController();
-  final _firestore = Firestore.instance;
+class _RegistrationScreenState extends State<RegistrationScreen> {
+  final fname = TextEditingController();
+  final lname = TextEditingController();
+  final prof = TextEditingController();
 
   checkTextFieldEmptyOrNot() {
-    String text1;
+    String text1, text2, text3;
 
-    text1 = oname.text;
+    text1 = fname.text;
+    text2 = lname.text;
+    text3 = prof.text;
 
-    if (text1 == '') {
+    if (text1 == '' || text2 == '' || text3 == '') {
       return false;
     } else {
       return true;
@@ -56,46 +52,39 @@ class _OrganizationPageState extends State<OrganizationPage> {
                 ),
               ),
               SizedBox(
-                height: 40.0,
+                height: 60.0,
               ),
               Text(
-                'Wonderful, ',
+                'Lets get to know each other',
                 style: kAppTextStyle,
               ),
               SizedBox(
                 height: 10.0,
               ),
-              RichText(
-                text: TextSpan(
-                  text: 'Our platform will help you tell memorble stories ',
-                  style: kTitleTextStyle.copyWith(
-                    fontSize: 24.0,
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'empowered',
-                      style: kTitleTextStyle.copyWith(
-                        fontSize: 24.0,
-                        color: Colors.amber,
-                      ),
-                    ),
-                    TextSpan(
-                      text: ' with data, but whose the author',
-                      style: kTitleTextStyle.copyWith(
-                        fontSize: 24.0,
-                      ),
-                    ),
-                  ],
-                ),
+              Text(
+                'What should we call you',
+                style: kTitleTextStyle,
               ),
               SizedBox(
-                height: 40.0,
+                height: 10.0,
               ),
               TextBox(
-                label: 'ORGANIZATION NAME',
+                label: 'FIRST NAME*',
+                keybrd: TextInputType.emailAddress,
+                lines: 1,
+                myController: fname,
+              ),
+              TextBox(
+                label: 'LAST NAME*',
                 keybrd: TextInputType.text,
                 lines: 1,
-                myController: oname,
+                myController: lname,
+              ),
+              TextBox(
+                label: 'PROFESSION',
+                keybrd: TextInputType.text,
+                lines: 1,
+                myController: prof,
               ),
               SizedBox(
                 height: 40.0,
@@ -110,18 +99,16 @@ class _OrganizationPageState extends State<OrganizationPage> {
                   ),
                   onTap: () async {
                     if (checkTextFieldEmptyOrNot() == true) {
-                      _firestore
-                          .collection('Volunetix')
-                          .document(widget.email)
-                          .setData({
-                        'first name': widget.fname,
-                        'last name': widget.lname,
-                        'profession': widget.prof,
-                        'phone number': widget.pnum,
-                        'vol/org': 'org',
-                        'oname': oname.text,
-                      });
-                      Navigator.pushNamed(context, 'event_screen');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RegistrationScreen2(
+                            fname: fname.text,
+                            lname: lname.text,
+                            prof: prof.text,
+                          ),
+                        ),
+                      );
                     } else {
                       showDialog(
                         context: context,
@@ -136,7 +123,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
                               textAlign: TextAlign.center,
                             ),
                             content: Text(
-                              "Please enter organization name",
+                              "Please fill in all text fields",
                               textAlign: TextAlign.center,
                             ),
                             actions: <Widget>[

@@ -3,9 +3,7 @@ import 'package:stopwatch/components/gradientBackground.dart';
 import 'package:stopwatch/components/textbox.dart';
 import 'package:stopwatch/components/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:stopwatch/screens/StopWatch.dart';
-import 'dart:async';
 
 class InputPage extends StatefulWidget {
   @override
@@ -13,7 +11,6 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  final _firestore = Firestore.instance;
   final _auth = FirebaseAuth.instance;
   FirebaseUser loggedInUser;
 
@@ -142,22 +139,22 @@ class _InputPageState extends State<InputPage> {
                 ),
                 onTap: () {
                   if (checkTextFieldEmptyOrNot() == true) {
-                    _firestore
-                        .collection('events')
-                        .document(textController_1.text)
-                        .setData({
-                      'event_host': loggedInUser.email,
-                      'event_name': textController_1.text,
-                      'event_des': textController_3.text,
-                      'event_date': _date.year.toString() +
-                          '-' +
-                          _date.month.toString() +
-                          '-' +
-                          _date.day.toString(),
-                      'event_time':
-                          _time.hour.toString() + ':' + _time.minute.toString(),
-                      'event_timetaken': '00:00:00',
-                    });
+//                    _firestore
+//                        .collection('events')
+//                        .document(textController_1.text)
+//                        .setData({
+//                      'event_host': loggedInUser.email,
+//                      'event_name': textController_1.text,
+//                      'event_des': textController_3.text,
+//                      'event_date': _date.year.toString() +
+//                          '-' +
+//                          _date.month.toString() +
+//                          '-' +
+//                          _date.day.toString(),
+//                      'event_time':
+//                          _time.hour.toString() + ':' + _time.minute.toString(),
+//                      'event_timetaken': '00:00:00',
+//                    });
                     Navigator.push(
                       context,
                       MaterialPageRoute(

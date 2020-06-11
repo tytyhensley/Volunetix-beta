@@ -1,0 +1,198 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:stopwatch/components/gradientBackground.dart';
+import 'package:stopwatch/components/constants.dart';
+import 'package:stopwatch/screens/startup/register/OrganizationPage.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+
+class RegistrationScreen3 extends StatefulWidget {
+  final String fname;
+  final String lname;
+  final String prof;
+  final String email;
+  final String pnum;
+
+  RegistrationScreen3(
+      {this.fname, this.lname, this.prof, this.email, this.pnum});
+
+  @override
+  _RegistrationScreen3State createState() => _RegistrationScreen3State();
+}
+
+class _RegistrationScreen3State extends State<RegistrationScreen3> {
+  bool vol = false;
+  bool org = false;
+  bool showSpinner = false;
+
+  var vcolor = Color(0xFFFFFFFF);
+  var ocolor = Color(0xFFFFFFFF);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ModalProgressHUD(
+        inAsyncCall: showSpinner,
+        child: GradientBackground(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  height: 30.0,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(
+                  height: 40.0,
+                ),
+                Text(
+                  'Thank you. We promise to never spam your inbox',
+                  style: kAppTextStyle,
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text(
+                  'So, how are you going to make a change?',
+                  style: kTitleTextStyle.copyWith(
+                    fontSize: 25.0,
+                  ),
+                ),
+                SizedBox(
+                  height: 40.0,
+                ),
+                Center(
+                  child: GestureDetector(
+                    child: Image.asset(
+                      'assets/images/soloIcon.png',
+                      color: vcolor,
+                    ),
+                    onTap: () {
+                      setState(() {
+                        vcolor = ktextColorA;
+                        ocolor = Color(0x20FFFFFF);
+                        vol = true;
+                        org = false;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Center(
+                  child: GestureDetector(
+                    child: Image.asset(
+                      'assets/images/charityIcon.png',
+                      color: ocolor,
+                    ),
+                    onTap: () {
+                      setState(() {
+                        ocolor = ktextColorA;
+                        vcolor = Color(0x20FFFFFF);
+                        org = true;
+                        vol = false;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 30.0,
+                ),
+                Center(
+                  child: GestureDetector(
+                    child: Text(
+                      'Next',
+                      style: kAppTextStyle.copyWith(
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    onTap: () async {
+                      if (vol == true || org == true) {
+                        if (vol == true) {
+                          setState(() {
+                            showSpinner = true;
+                          });
+//                        _firestore
+//                            .collection('Volunetix')
+//                            .document(widget.email)
+//                            .setData({
+//                          'first name': widget.fname,
+//                          'last name': widget.lname,
+//                          'profession': widget.prof,
+//                          'phone number': widget.pnum,
+//                          'vol/org': 'vol',
+//                        });
+                          Navigator.pushNamed(context, 'nav_screen');
+                          setState(() {
+                            showSpinner = false;
+                          });
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => OrganizationPage(
+                                fname: widget.fname,
+                                lname: widget.lname,
+                                prof: widget.prof,
+                                email: widget.email,
+                                pnum: widget.pnum,
+                              ),
+                            ),
+                          );
+                        }
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            // return object of type Dialog
+                            return AlertDialog(
+                              title: Text(
+                                "Uh-Oh",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              content: Text(
+                                "Please choose an option",
+                                textAlign: TextAlign.center,
+                              ),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text(
+                                    "OK",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

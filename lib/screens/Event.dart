@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stopwatch/components/bottomnavbar.dart';
 import 'package:stopwatch/components/constants.dart';
 
 class EventPage extends StatefulWidget {
@@ -11,12 +12,13 @@ class _EventPageState extends State<EventPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple[700],
+        backgroundColor: ktextColorD,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/Volunetic-horizontal-white.png',
+              'assets/images/volunetixLogoSmall.png',
+              color: Colors.white,
               fit: BoxFit.contain,
               height: 32,
             ),
@@ -46,6 +48,7 @@ class _EventPageState extends State<EventPage> {
           ),
         ],
       ),
+      bottomNavigationBar: BottomNav(),
     );
   }
 }

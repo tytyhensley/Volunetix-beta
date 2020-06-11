@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:stopwatch/screens/WelcomeScreen.dart';
-import 'package:stopwatch/screens/InputPage.dart';
-import 'package:stopwatch/screens/LoginPage.dart';
-import 'package:stopwatch/screens/Event.dart';
-import 'package:stopwatch/screens/register/RegisterPage1.dart';
-import 'package:stopwatch/screens/register/RegisterPage2.dart';
-import 'package:stopwatch/screens/register/RegisterPage3.dart';
-import 'package:stopwatch/screens/ForgotPassword.dart';
+import 'package:stopwatch/components/bottomnavbar.dart';
+import 'package:stopwatch/screens/morepages/connect.dart';
+import 'package:stopwatch/screens/morepages/mission.dart';
+import 'package:stopwatch/screens/startup/WelcomeScreen.dart';
+import 'package:stopwatch/screens/startup/LoginPage.dart';
+import 'package:stopwatch/screens/startup/register/RegisterPage1.dart';
+import 'package:stopwatch/screens/startup/ForgotPassword.dart';
+import 'package:stopwatch/screens/morepages/MorePage.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,11 +21,11 @@ class MyApp extends StatelessWidget {
         'welcome_screen': (context) => WelcomePage(),
         'login_screen': (context) => LoginPage(),
         'registration_screen': (context) => RegistrationScreen(),
-        'registration_screen2': (context) => RegistrationScreen2(),
-        'registration_screen3': (context) => RegistrationScreen3(),
-        'input_screen': (context) => InputPage(),
-        'event_screen': (context) => EventPage(),
         'forgotpass_screen': (context) => ForgotPassword(),
+        'nav_screen': (context) => BottomNav(),
+        'more_page': (context) => MainMore(),
+        'mission_page': (context) => MissionPage(),
+        'connect_page': (context) => ConnectPage(),
       },
     );
   }
