@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:stopwatch/components/bottomnavbar.dart';
+import 'package:stopwatch/screens/charity/charityEvent.dart';
+import 'package:stopwatch/screens/charity/createEvent/createEvent1.dart';
+import 'package:stopwatch/screens/charity/eventList.dart';
+import 'package:stopwatch/screens/charity/upcomingEvents/upcomingEvents1.dart';
+import 'package:stopwatch/screens/charity/upcomingEvents/upcomingEvents2.dart';
 import 'package:stopwatch/screens/morepages/connect.dart';
 import 'package:stopwatch/screens/morepages/mission.dart';
+import 'package:stopwatch/screens/profile/editProfilePage.dart';
 import 'package:stopwatch/screens/startup/WelcomeScreen.dart';
 import 'package:stopwatch/screens/startup/LoginPage.dart';
 import 'package:stopwatch/screens/startup/register/RegisterPage1.dart';
@@ -26,6 +32,12 @@ class MyApp extends StatelessWidget {
         'more_page': (context) => MainMore(),
         'mission_page': (context) => MissionPage(),
         'connect_page': (context) => ConnectPage(),
+        'charity_event': (context) => CharityEventPage(),
+        'create_event1': (context) => CreateEvent1(),
+        'charityevent_list': (context) => CharityEventList(),
+        'upcoming_event1': (context) => UpcomingEvent1(),
+        'upcoming_event2': (context) => UpcomingEvent2(),
+        'edit_profile': (context) => EditProfile(),
       },
     );
   }

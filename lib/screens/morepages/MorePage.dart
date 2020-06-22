@@ -16,6 +16,7 @@ class _MainMoreState extends State<MainMore> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ktextColorD,
+        automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -30,7 +31,7 @@ class _MainMoreState extends State<MainMore> {
       ),
       body: Container(
         width: double.infinity,
-        color: Colors.black,
+        color: Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -47,6 +48,7 @@ class _MainMoreState extends State<MainMore> {
                 style: kAppTextStyle.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 23,
+                  color: ktextColorD,
                 ),
               ),
             ),
@@ -62,6 +64,7 @@ class _MainMoreState extends State<MainMore> {
                 style: kAppTextStyle.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 23,
+                  color: ktextColorD,
                 ),
               ),
             ),
@@ -74,6 +77,7 @@ class _MainMoreState extends State<MainMore> {
                 style: kAppTextStyle.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 23,
+                  color: ktextColorD,
                 ),
               ),
             ),
@@ -91,6 +95,7 @@ class _MainMoreState extends State<MainMore> {
                 style: kAppTextStyle.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 23,
+                  color: ktextColorD,
                 ),
               ),
             ),

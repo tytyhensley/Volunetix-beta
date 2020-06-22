@@ -8,7 +8,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:807888681860:android:863d0604f335c4f36efbd1",
+        "mobilesdk_app_id": "1:807888681860:android:60611b76912db5256efbd1",
         "android_client_info": {
           "package_name": "com.tyeecehensley.stopwatch"
         }
@@ -30,6 +30,13 @@
             {
               "client_id": "807888681860-9v4c6b37mlmairts2jckud1f7cc12p3k.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "807888681860-564ge8ftb3pfssiect68vgbrdtpq5u7l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tyeecehensley.stopwatch"
+              }
             }
           ]
         }

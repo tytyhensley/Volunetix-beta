@@ -4,7 +4,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:stopwatch/components/gradientBackground.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:stopwatch/screens/charity/charityEvent.dart';
+import 'package:stopwatch/screens/charity/upcomingEvents/upcomingEvents1.dart';
 import 'package:stopwatch/screens/morepages/MorePage.dart';
+import 'package:stopwatch/screens/profile/charprofilePage.dart';
+import 'package:stopwatch/screens/profile/volprofilePage.dart';
+import 'package:stopwatch/screens/volunteer/eventList.dart';
+import 'package:stopwatch/screens/volunteer/noeventList.dart';
+import 'package:stopwatch/screens/volunteer/upcomingEvent.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class BottomNav extends StatefulWidget {
   @override
@@ -14,15 +22,26 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   final _auth = FirebaseAuth.instance;
   FirebaseUser loggedInUser;
+  final DatabaseReference _updateVolunteer =
+      FirebaseDatabase.instance.reference().child('Volunteers');
   bool showSpinner = true;
   int _currentIndex = 0;
   int _pageIndex = 0;
+  String cvol;
+
   final List<Widget> pages = [
     GradientBackground(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
     ),
+    CharityEventPage(),
+    UpcomingEvent1(),
+    CharityProfilePage(),
     MainMore(),
+    VolunteerEventList(),
+    NoEventPage(),
+    VolunteerUpcomingEvent(),
+    VolunteerProfilePage(),
   ];
 
   @override
@@ -33,43 +52,55 @@ class _BottomNavState extends State<BottomNav> {
 
   getCurrentUser() async {
     try {
-      final user = await _auth.currentUser();
-      if (user != null) {
-        loggedInUser = user;
-        setState(() {
-          showSpinner = false;
+      showSpinner = true;
+      await _auth.currentUser().then((value) {
+        loggedInUser = value;
+        _updateVolunteer.child(loggedInUser.uid).once().then((value) {
+          var data = value.value;
+          cvol = data['currently_volunteering'];
+          setState(() {
+            showSpinner = false;
+          });
         });
-      }
+      });
     } catch (e) {}
   }
 
   Widget correctPage() {
-//   correctIndex();
+    correctIndex();
     return pages[_pageIndex];
   }
-//
-//  correctIndex() async {
-//    final _userData = await _firestore
-//        .collection('Volunetix')
-//        .document(loggedInUser.email)
-//        .get();
-//    if (_userData.data['vol/org'].toString() == 'vol') {
-//      if (_currentIndex != 3) {
-//        setState(() {
-//          _pageIndex = _currentIndex + 4;
-//        });
-//      } else {
-//        setState(() {
-//          _pageIndex = _currentIndex;
-//        });
-//      }
-//    }
-//    if (_userData.data['vol/org'].toString() == 'org') {
-//      setState(() {
-//        _pageIndex = _currentIndex + 1;
-//      });
-//    }
-//  }
+
+  correctIndex() async {
+    if (loggedInUser.displayName == 'Volunteer') {
+      if (_currentIndex != 3) {
+        if (_currentIndex == 0) {
+          if (cvol == 'false') {
+            setState(() {
+              _pageIndex = 5;
+            });
+          } else {
+            setState(() {
+              _pageIndex = 6;
+            });
+          }
+        } else {
+          setState(() {
+            _pageIndex = _currentIndex + 6;
+          });
+        }
+      } else {
+        setState(() {
+          _pageIndex = _currentIndex + 1;
+        });
+      }
+    }
+    if (loggedInUser.displayName == 'Charity') {
+      setState(() {
+        _pageIndex = _currentIndex + 1;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,8 +154,7 @@ class _BottomNavState extends State<BottomNav> {
         ],
         onTap: (index) {
           setState(() {
-            //_currentIndex = index;
-            _pageIndex = 1; //delete later, just to avoid error
+            _currentIndex = index;
           });
         },
       ),

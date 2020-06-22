@@ -164,6 +164,7 @@ class _RegistrationScreen2State extends State<RegistrationScreen2> {
                                   prof: widget.prof,
                                   email: email.text,
                                   pnum: pnum.text,
+                                  pass: password.text,
                                 ),
                               ),
                             );

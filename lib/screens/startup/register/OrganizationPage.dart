@@ -4,6 +4,8 @@ import 'package:stopwatch/components/gradientBackground.dart';
 import 'package:stopwatch/components/constants.dart';
 import 'package:stopwatch/components/textbox.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class OrganizationPage extends StatefulWidget {
   final String fname;
@@ -11,8 +13,10 @@ class OrganizationPage extends StatefulWidget {
   final String prof;
   final String email;
   final String pnum;
+  final String pass;
 
-  OrganizationPage({this.fname, this.lname, this.prof, this.email, this.pnum});
+  OrganizationPage(
+      {this.fname, this.lname, this.prof, this.email, this.pnum, this.pass});
   @override
   _OrganizationPageState createState() => _OrganizationPageState();
 }
@@ -20,6 +24,12 @@ class OrganizationPage extends StatefulWidget {
 class _OrganizationPageState extends State<OrganizationPage> {
   final oname = TextEditingController();
   bool showSpinner = false;
+
+  final _auth = FirebaseAuth.instance;
+  FirebaseUser loggedInUser;
+  UserUpdateInfo updateInfo = UserUpdateInfo();
+  final DatabaseReference database =
+      FirebaseDatabase.instance.reference().child('Charities');
 
   checkTextFieldEmptyOrNot() {
     String text1;
@@ -30,6 +40,23 @@ class _OrganizationPageState extends State<OrganizationPage> {
       return false;
     } else {
       return true;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser();
+      if (user != null) {
+        loggedInUser = user;
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -115,17 +142,22 @@ class _OrganizationPageState extends State<OrganizationPage> {
                         setState(() {
                           showSpinner = true;
                         });
-//                      _firestore
-//                          .collection('Volunetix')
-//                          .document(widget.email)
-//                          .setData({
-//                        'first name': widget.fname,
-//                        'last name': widget.lname,
-//                        'profession': widget.prof,
-//                        'phone number': widget.pnum,
-//                        'vol/org': 'org',
-//                        'oname': oname.text,
-//                      });
+                        updateInfo.displayName = 'Charity';
+                        await loggedInUser.updateProfile(updateInfo);
+                        setState(() {
+                          showSpinner = true;
+                        });
+                        database.child(loggedInUser.uid).set({
+                          'firstName': widget.fname,
+                          'lastName': widget.lname,
+                          'email': widget.email,
+                          'occupation': widget.prof,
+                          'number': widget.pnum,
+                          'name': widget.fname + ' ' + widget.lname,
+                          'uid': loggedInUser.uid,
+                          'organization': oname.text,
+                          'password': widget.pass,
+                        });
                         Navigator.pushNamed(context, 'nav_screen');
                         setState(() {
                           showSpinner = false;

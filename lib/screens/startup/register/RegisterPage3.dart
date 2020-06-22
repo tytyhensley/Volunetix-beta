@@ -4,6 +4,8 @@ import 'package:stopwatch/components/gradientBackground.dart';
 import 'package:stopwatch/components/constants.dart';
 import 'package:stopwatch/screens/startup/register/OrganizationPage.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class RegistrationScreen3 extends StatefulWidget {
   final String fname;
@@ -11,9 +13,10 @@ class RegistrationScreen3 extends StatefulWidget {
   final String prof;
   final String email;
   final String pnum;
+  final String pass;
 
   RegistrationScreen3(
-      {this.fname, this.lname, this.prof, this.email, this.pnum});
+      {this.fname, this.lname, this.prof, this.email, this.pnum, this.pass});
 
   @override
   _RegistrationScreen3State createState() => _RegistrationScreen3State();
@@ -24,8 +27,31 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
   bool org = false;
   bool showSpinner = false;
 
+  final _auth = FirebaseAuth.instance;
+  FirebaseUser loggedInUser;
+  UserUpdateInfo updateInfo = UserUpdateInfo();
+  final DatabaseReference database =
+      FirebaseDatabase.instance.reference().child('Volunteers');
+
   var vcolor = Color(0xFFFFFFFF);
   var ocolor = Color(0xFFFFFFFF);
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser();
+      if (user != null) {
+        loggedInUser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,19 +145,23 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                     onTap: () async {
                       if (vol == true || org == true) {
                         if (vol == true) {
+                          updateInfo.displayName = 'Volunteer';
+                          await loggedInUser.updateProfile(updateInfo);
                           setState(() {
                             showSpinner = true;
                           });
-//                        _firestore
-//                            .collection('Volunetix')
-//                            .document(widget.email)
-//                            .setData({
-//                          'first name': widget.fname,
-//                          'last name': widget.lname,
-//                          'profession': widget.prof,
-//                          'phone number': widget.pnum,
-//                          'vol/org': 'vol',
-//                        });
+                          database.child(loggedInUser.uid).set({
+                            'firstName': widget.fname,
+                            'lastName': widget.lname,
+                            'email': widget.email,
+                            'occupation': widget.prof,
+                            'number': widget.pnum,
+                            'name': widget.fname + ' ' + widget.lname,
+                            'signed_up_at_event': 'false',
+                            'currently_volunteering': 'false',
+                            'uid': loggedInUser.uid,
+                            'total_career_time': 0,
+                          });
                           Navigator.pushNamed(context, 'nav_screen');
                           setState(() {
                             showSpinner = false;
@@ -146,6 +176,7 @@ class _RegistrationScreen3State extends State<RegistrationScreen3> {
                                 prof: widget.prof,
                                 email: widget.email,
                                 pnum: widget.pnum,
+                                pass: widget.pass,
                               ),
                             ),
                           );
