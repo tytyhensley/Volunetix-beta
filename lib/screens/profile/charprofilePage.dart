@@ -4,7 +4,7 @@ import 'package:stopwatch/components/constants.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:image_picker_modern/image_picker_modern.dart';
 import 'dart:io';
 
 class CharityProfilePage extends StatefulWidget {
@@ -20,7 +20,6 @@ class _CharityProfilePageState extends State<CharityProfilePage> {
   final DatabaseReference _updateVolunteers =
       FirebaseDatabase.instance.reference().child('Volunteers');
   String _image;
-  final picker = ImagePicker();
 
   var data;
   String name;
@@ -68,15 +67,11 @@ class _CharityProfilePageState extends State<CharityProfilePage> {
   @override
   Widget build(BuildContext context) {
     getImage() async {
-      await picker
-          .getImage(
+      await ImagePicker.pickImage(
         source: ImageSource.gallery,
-        maxWidth: 180.0,
-        maxHeight: 180.0,
-        imageQuality: 300,
-        preferredCameraDevice: CameraDevice.rear,
-      )
-          .then((value) {
+        maxWidth: 100.0,
+        maxHeight: 100.0,
+      ).then((value) {
         var image = value;
         setState(() {
           File uploadimage = File(image.path);
@@ -116,11 +111,11 @@ class _CharityProfilePageState extends State<CharityProfilePage> {
                 Row(
                   children: [
                     CircleAvatar(
-                      radius: 80,
+                      radius: 50,
                       child: ClipOval(
                         child: SizedBox(
-                          width: 180.0,
-                          height: 180.0,
+                          width: 100.0,
+                          height: 100.0,
                           child: (_image != null)
                               ? Image.network(
                                   _image,

@@ -25,7 +25,7 @@ class _EditProfileState extends State<EditProfile> {
     text2 = occ.text;
     text3 = bio.text;
 
-    if (text1 == '' || text2 == '' || text3 == ' ') {
+    if (text1 == '' && text2 == '' && text3 == ' ') {
       return false;
     } else {
       return true;
@@ -125,7 +125,7 @@ class _EditProfileState extends State<EditProfile> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Occupation:',
+                    'Job:',
                     textAlign: TextAlign.center,
                     style: kAppTextStyle.copyWith(
                       color: Colors.grey,
@@ -173,6 +173,11 @@ class _EditProfileState extends State<EditProfile> {
                 child: GestureDetector(
                   onTap: () {
                     if (checkTextFieldEmptyOrNot() == true) {
+                      String text1, text2, text3;
+
+                      text1 = name.text;
+                      text2 = occ.text;
+                      text3 = bio.text;
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -211,15 +216,28 @@ class _EditProfileState extends State<EditProfile> {
                                   textAlign: TextAlign.center,
                                 ),
                                 onPressed: () {
-                                  _updateProfile
-                                      .child(loggedInUser.uid)
-                                      .update({
-                                    'name': name.text,
-                                    'bio': bio.text,
-                                    'occupation': occ.text
-                                  }).then((value) {
-                                    Navigator.of(context).pop();
-                                  });
+                                  if (text1 != '') {
+                                    _updateProfile
+                                        .child(loggedInUser.uid)
+                                        .update({
+                                      'name': name.text,
+                                    });
+                                  }
+                                  if (text2 != '') {
+                                    _updateProfile
+                                        .child(loggedInUser.uid)
+                                        .update({
+                                      'occupation': occ.text,
+                                    });
+                                  }
+                                  if (text3 != '') {
+                                    _updateProfile
+                                        .child(loggedInUser.uid)
+                                        .update({
+                                      'bio': bio.text,
+                                    });
+                                  }
+                                  Navigator.of(context).pop();
                                 },
                               ),
                             ],
@@ -240,7 +258,7 @@ class _EditProfileState extends State<EditProfile> {
                               textAlign: TextAlign.center,
                             ),
                             content: Text(
-                              "Please fill in all text fields",
+                              "Please fill in one of the text fields",
                               textAlign: TextAlign.center,
                             ),
                             actions: <Widget>[
