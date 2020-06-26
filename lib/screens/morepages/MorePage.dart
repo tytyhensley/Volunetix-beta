@@ -72,19 +72,6 @@ class _MainMoreState extends State<MainMore> {
               height: 20.0,
             ),
             GestureDetector(
-              child: Text(
-                'QR Code',
-                style: kAppTextStyle.copyWith(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 23,
-                  color: ktextColorD,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            GestureDetector(
               onTap: () async {
                 await _auth.signOut().then((value) {
                   Navigator.pushNamed(context, 'welcome_screen');

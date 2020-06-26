@@ -161,7 +161,7 @@ class _AddEvent2State extends State<AddEvent2> {
                           textAlign: TextAlign.center,
                         ),
                         content: Text(
-                          "Your time has been added tot he event, Thank You! ",
+                          "Your time has been added to the event, Thank You! ",
                           textAlign: TextAlign.center,
                         ),
                         actions: <Widget>[

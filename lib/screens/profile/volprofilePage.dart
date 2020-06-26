@@ -62,6 +62,7 @@ class _VolunteerProfilePageState extends State<VolunteerProfilePage> {
         });
         firebaseStorageRef
             .child(loggedInUser.uid)
+            .child('profilepic')
             .getDownloadURL()
             .then((value) {
           setState(() {
@@ -85,7 +86,10 @@ class _VolunteerProfilePageState extends State<VolunteerProfilePage> {
         var image = value;
         setState(() {
           File uploadimage = File(image.path);
-          firebaseStorageRef.child(loggedInUser.uid).putFile(uploadimage);
+          firebaseStorageRef
+              .child(loggedInUser.uid)
+              .child('profilepic')
+              .putFile(uploadimage);
         });
       });
     }
