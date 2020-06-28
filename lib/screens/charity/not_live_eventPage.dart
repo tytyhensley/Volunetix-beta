@@ -19,7 +19,7 @@ class _NotLiveEventPageState extends State<NotLiveEventPage> {
 
   bool showSpinner = false;
   int vol = 0;
-  var totaltime = 0;
+  var totaltime;
   int volHrs = 0;
   List<String> months = [
     'January',
@@ -53,6 +53,9 @@ class _NotLiveEventPageState extends State<NotLiveEventPage> {
   }
 
   void checkEvent() {
+    setState(() {
+      showSpinner = true;
+    });
     _checkEvent.child(widget.name).once().then((value) {
       var data = value.value;
       totaltime = data['total_time'];
@@ -60,7 +63,6 @@ class _NotLiveEventPageState extends State<NotLiveEventPage> {
       data.keys.forEach((k) => {
             if (k == 'volunteers')
               {
-                showSpinner = true,
                 _checkEvent
                     .child(widget.name)
                     .child('volunteers')

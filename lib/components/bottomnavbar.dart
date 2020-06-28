@@ -27,7 +27,7 @@ class _BottomNavState extends State<BottomNav> {
   bool showSpinner = true;
   int _currentIndex = 0;
   int _pageIndex = 0;
-  String cvol;
+  var data;
 
   final List<Widget> pages = [
     GradientBackground(
@@ -56,8 +56,7 @@ class _BottomNavState extends State<BottomNav> {
       await _auth.currentUser().then((value) {
         loggedInUser = value;
         _updateVolunteer.child(loggedInUser.uid).once().then((value) {
-          var data = value.value;
-          cvol = data['currently_volunteering'];
+          data = value.value;
           setState(() {
             showSpinner = false;
           });
@@ -75,7 +74,7 @@ class _BottomNavState extends State<BottomNav> {
     if (loggedInUser.displayName == 'Volunteer') {
       if (_currentIndex != 3) {
         if (_currentIndex == 0) {
-          if (cvol == 'false') {
+          if (data['currently_volunteering'] == 'false') {
             setState(() {
               _pageIndex = 5;
             });

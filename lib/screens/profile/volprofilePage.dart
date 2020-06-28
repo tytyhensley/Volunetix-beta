@@ -27,7 +27,7 @@ class _VolunteerProfilePageState extends State<VolunteerProfilePage> {
   String bio;
   var events = List();
   String impact;
-  bool showSpinner = false;
+  bool showSpinner = true;
 
   String _getTime() {
     int time = data['total_career_time'];
@@ -40,13 +40,14 @@ class _VolunteerProfilePageState extends State<VolunteerProfilePage> {
   void initState() {
     super.initState();
     getCurrentUser();
+    setState(() {
+      showSpinner = false;
+    });
   }
 
   getCurrentUser() async {
     try {
-      setState(() {
-        showSpinner = true;
-      });
+      showSpinner = true;
       await _auth.currentUser().then((value) {
         loggedInUser = value;
         _updateVolunteers.child(loggedInUser.uid).once().then((value) {
@@ -55,14 +56,10 @@ class _VolunteerProfilePageState extends State<VolunteerProfilePage> {
           occ = data['occupation'];
           bio = data['bio'];
           events = data['lifelong_events_attended'];
-        }).then((value) {
-          setState(() {
-            showSpinner = false;
-          });
         });
         firebaseStorageRef
-            .child(loggedInUser.uid)
             .child('profilepic')
+            .child(loggedInUser.uid)
             .getDownloadURL()
             .then((value) {
           setState(() {
@@ -87,8 +84,8 @@ class _VolunteerProfilePageState extends State<VolunteerProfilePage> {
         setState(() {
           File uploadimage = File(image.path);
           firebaseStorageRef
-              .child(loggedInUser.uid)
               .child('profilepic')
+              .child(loggedInUser.uid)
               .putFile(uploadimage);
         });
       });
@@ -158,7 +155,7 @@ class _VolunteerProfilePageState extends State<VolunteerProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          (name != null) ? name : '  ',
+                          (name != null) ? name : ' ',
                           style: kTitleTextStyle.copyWith(
                             color: ktextColorD,
                             fontWeight: FontWeight.w800,

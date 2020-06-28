@@ -315,12 +315,9 @@ class _AddEvent3State extends State<AddEvent3> {
     "Staff"
   ];
   checkTextFieldEmptyOrNot() {
-    String text1, text2;
-
-    text1 = whyVol.text;
-    text2 = occ.text;
-
-    if (text1 == '' || text2 == '' || widget.taskslist[0] == 'No tasks') {
+    if (_currentValue == '--pick answer--' ||
+        _cValue == '--pick answer--' ||
+        widget.taskslist[0] == 'No tasks') {
       return false;
     } else {
       return true;

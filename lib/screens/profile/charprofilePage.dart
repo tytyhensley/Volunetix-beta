@@ -18,7 +18,7 @@ class _CharityProfilePageState extends State<CharityProfilePage> {
   StorageReference firebaseStorageRef = FirebaseStorage.instance.ref();
   String fileName;
   final DatabaseReference _updateVolunteers =
-      FirebaseDatabase.instance.reference().child('Volunteers');
+      FirebaseDatabase.instance.reference().child('Charities');
   String _image;
 
   var data;
@@ -42,15 +42,12 @@ class _CharityProfilePageState extends State<CharityProfilePage> {
         loggedInUser = value;
         _updateVolunteers.child(loggedInUser.uid).once().then((value) {
           data = value.value;
-          name = data['name'];
+          name = data['organization'];
           occ = data['occupation'];
           bio = data['bio'];
-        }).then((value) {
-          setState(() {
-            showSpinner = false;
-          });
         });
         firebaseStorageRef
+            .child('profilepic')
             .child(loggedInUser.uid)
             .getDownloadURL()
             .then((value) {
@@ -58,6 +55,9 @@ class _CharityProfilePageState extends State<CharityProfilePage> {
             _image = value.toString();
           });
         });
+      });
+      setState(() {
+        showSpinner = false;
       });
     } catch (e) {
       print(e);
@@ -75,7 +75,10 @@ class _CharityProfilePageState extends State<CharityProfilePage> {
         var image = value;
         setState(() {
           File uploadimage = File(image.path);
-          firebaseStorageRef.child(loggedInUser.uid).putFile(uploadimage);
+          firebaseStorageRef
+              .child('profilepic')
+              .child(loggedInUser.uid)
+              .putFile(uploadimage);
         });
       });
     }
